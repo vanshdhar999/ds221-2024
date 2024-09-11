@@ -3,12 +3,14 @@
 #include<fstream>
 #include<iostream>
 #include <chrono>
+#include <algorithm>
 using namespace std::chrono;
 using namespace std;
 
-
-// define an extern variable to store and increment the duration for each function call
-// supprress the warning for global variable
+/**
+ * @brief Do not modify this code. 
+ * 
+ */
 #pragma GCC diagnostic ignored "-Wreturn-type"
 extern auto fileIo = 0;
 
@@ -20,17 +22,24 @@ extern auto fileIo = 0;
 void writeOutputToFile(const vector<int> group,string outputPath)
 {
     auto start = high_resolution_clock::now();
-    ofstream outputFile(outputPath);
+    ofstream outputFile(outputPath, ios::app);
     if (!outputFile)
     {
-        cerr << "Failed to create output file." << endl;
+        cerr << "Failed to open output file." << endl;
         return;
     }
 
     for (const auto &value : group)
     {
+        // ignore the last comma
+        if (value == group.back())
+        {
+            outputFile << value;
+            break;
+        }
         outputFile << value << ",";
     }
+    outputFile << '\n';
 
     outputFile.close();
 
@@ -42,3 +51,5 @@ void writeOutputToFile(const vector<int> group,string outputPath)
     cout<<"Total time taken by file write: "<<fileIo<<" microseconds"<<endl;
 
 }
+
+
