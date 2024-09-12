@@ -28,6 +28,10 @@ void question1(string hashtagsPath, string purchasesPath, string pricesPath, int
     auto computeDuration = duration.count() - fileIo;
     cout << "Time taken by function: " << duration.count() << " microseconds" << endl;
     cout << "Total time taken: " << computeDuration << " microseconds" << endl;
+
+    hashtags.reset();
+    purchases.reset();
+    prices.reset();
 }
 
 /**
@@ -40,6 +44,7 @@ void question2(string purchasesPath, string pricesPath, string groupsPath, strin
     fileIterator purchases(purchasesPath);
     fileIterator prices(pricesPath);
     fileIterator groups(groupsPath);
+   
 
     float avgExpense;
     ofstream outputFile(outputPath2);
@@ -65,6 +70,11 @@ void question2(string purchasesPath, string pricesPath, string groupsPath, strin
 
         // write output to file
         outputFile << avgExpense << '\n';
+
+        // reset the file pointers
+        purchases.reset();
+        prices.reset();
+
     }
     outputFile.close();
 }
@@ -116,6 +126,12 @@ void question3(
     // Initial call
     groupCustomersByHashtags(hashtags, purchases, prices, k, outputPath3 + "/output." + to_string(fileSuffix++) + ".csv");
 
+    //reset the file pointers
+    hashtags.reset();
+    purchases.reset();
+    prices.reset();
+
+
     // Process new hashtags in batches
     while (newHashTags.hasNext())
     {
@@ -124,6 +140,9 @@ void question3(
         {
             i = 0;
             processBatch(hashtags, purchases, prices, productToHashtagsList, fileSuffix, k, outputPath3);
+            hashtags.reset();
+            purchases.reset();
+            prices.reset();
         }
     }
 

@@ -53,4 +53,13 @@ public:
     {
         return !file.eof();
     }
+
+    // reset() function to reset the file pointer to the beginning of the file.
+public:
+    void reset()
+    {
+        file.clear();
+        file.seekg(0, ios::beg);
+        getline(file, line);
+    }
 };
