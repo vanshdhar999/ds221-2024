@@ -14,7 +14,7 @@ using namespace std::chrono;
  */
 void question1(string hashtagsPath, string purchasesPath, string pricesPath, int k, string outputPath)
 {
-
+    std::cout << "Question 1" << std::endl;
     fileIterator hashtags(hashtagsPath);
     fileIterator purchases(purchasesPath);
     fileIterator prices(pricesPath);
@@ -176,17 +176,19 @@ int main(int argc, char **argv)
     string hashtagsPath = argv[1];
     string purchasesPath = argv[2];
     string pricesPath = argv[3];
-    string groupsPath = argv[4];
-    string outputPath = argv[5];  // File path for output file
-    string outputPath2 = argv[6]; // File path for output file
-    string outputPath3 = argv[7]; //  Folder path for output files
-    string newHashtagPath = argv[8];
+
+    //string pricesPath = argv[3];
+    //string groupsPath = argv[4];
+    string outputPath = argv[4];  // File path for output file
+    //string outputPath2 = argv[6]; // File path for output file
+    //string outputPath3 = argv[7]; //  Folder path for output files
+    //string newHashtagPath = argv[8];
 
     int k = 2; // Q1
     question1(hashtagsPath, purchasesPath, pricesPath, k, outputPath);
 
-    question2(purchasesPath, pricesPath, groupsPath, outputPath2);
+    //question2(purchasesPath, pricesPath, groupsPath, outputPath2);
 
-    question3(hashtagsPath, purchasesPath, pricesPath, newHashtagPath, k, outputPath3);
+    //question3(hashtagsPath, purchasesPath, pricesPath, newHashtagPath, k, outputPath3);
     return 0;
 }
