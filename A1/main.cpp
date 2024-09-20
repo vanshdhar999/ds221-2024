@@ -173,21 +173,21 @@ void question3(
 int main(int argc, char **argv)
 {
 
-    string hashtagsPath = argv[1];
-    string purchasesPath = argv[2];
-    string pricesPath = argv[3];
-
+    //string hashtagsPath = argv[1];
+    string purchasesPath = argv[1];
     //string pricesPath = argv[3];
-    //string groupsPath = argv[4];
-    string outputPath = argv[4];  // File path for output file
-    //string outputPath2 = argv[6]; // File path for output file
+
+    string pricesPath = argv[2];
+    string groupsPath = argv[3];
+    //string outputPath = argv[4];  // File path for output file
+    string outputPath2 = argv[4]; // File path for output file
     //string outputPath3 = argv[7]; //  Folder path for output files
     //string newHashtagPath = argv[8];
 
     int k = 2; // Q1
-    question1(hashtagsPath, purchasesPath, pricesPath, k, outputPath);
+    //question1(hashtagsPath, purchasesPath, pricesPath, k, outputPath);
 
-    //question2(purchasesPath, pricesPath, groupsPath, outputPath2);
+    question2(purchasesPath, pricesPath, groupsPath, outputPath2);
 
     //question3(hashtagsPath, purchasesPath, pricesPath, newHashtagPath, k, outputPath3);
     return 0;

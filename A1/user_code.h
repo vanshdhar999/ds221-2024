@@ -69,15 +69,28 @@ map<int, vector<int> > getCustomerPurchases(fileIterator& purchases){
         if(tokens.size() > 1){
 
             int customer_ID = tokens[0];
+
+            cout  << "Processing customer: " << customer_ID << "\n";
             
             vector<int> purchases;
-            for(int i = 1; i < tokens.size(); i++){
-                purchases.push_back(tokens[i]);
+
+            if(customerPurchases.find(customer_ID) != customerPurchases.end()){
+
+                    cout << "Customer Already Exists " <<  "\n";
+                    customerPurchases[customer_ID].push_back(tokens[1]);
                 
+            }else{
+                for(int i = 1; i < tokens.size(); i++){
+                        purchases.push_back(tokens[i]);
+                
+                        customerPurchases[customer_ID] = purchases;
+                }
+
             }
-            customerPurchases[customer_ID] = purchases;
         }
     }
+
+
     return customerPurchases; 
 }
 
@@ -240,15 +253,59 @@ void groupCustomersByHashtags(fileIterator& hashtags, fileIterator& purchases,fi
  * @param purchases 
  * @param prices
  */
+
+map<int, int> getPriceMap(fileIterator& prices){
+        
+    map<int, int> priceMap;
+    string word;
+    while(prices.hasNext()){
+        string line = prices.next();
+        
+        stringstream ss(line);
+        
+        vector<int> tokens;
+        while(getline(ss, word, ',')){
+            tokens.push_back(stoi(word));
+        }
+        priceMap[tokens[0]] = tokens[1];
+    }
+    
+    return priceMap;
+}
+
 float calculateGroupAverageExpense(vector<int> customerList, fileIterator& purchases,fileIterator& prices){
     //Use this to log compute time    
     auto start = high_resolution_clock::now();
     //  Write your code here
+
+    map<int, vector<int> > purchaseMap;
+
+    int sumTotal = 0;
+    purchaseMap = getCustomerPurchases(purchases);
+
+    map<int, int> priceMap;
+
+    priceMap = getPriceMap(prices);
+
+    for(auto& customer: customerList){
+        std::cout << "Customer in the group: " << customer << "\n";
+        vector<int> purchases = purchaseMap[customer];
+        for(auto& purchase: purchases){
+            cout << "ProductId: " << purchase << "Price: " << priceMap[purchase] << "\n";
+            sumTotal += priceMap[purchase];
+        }
+    }
+    cout << "Group Size: " << customerList.size() << "\n";
+    int groupAverage = sumTotal / customerList.size();
+
+    std::cout << "Group Average: " << groupAverage << "\n";
+
+
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     cout << "Time taken by this function: "<< duration.count() << " microseconds" << endl;
 
-    return 0.0;
+    return groupAverage;
 }
 
 
